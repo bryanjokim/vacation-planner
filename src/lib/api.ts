@@ -18,7 +18,7 @@ export const api = {
   },
   async planDay(trip: Trip, outline: PlanOutline, dayIndex: number): Promise<Block[]> {
     try { return (await post<{ blocks: Block[] }>("/api/plan/day", { trip, outline, dayIndex })).blocks; }
-    catch (e) { console.warn("planDay fallback", e); return FIXTURE_TRIP.blocks.filter((b) => b.dayIndex === dayIndex % 3).map((b) => ({ ...b, dayIndex, id: `${b.id}-${dayIndex}`, start: trip.days[dayIndex].date + b.start.slice(10), end: trip.days[dayIndex].date + b.end.slice(10) })); }
+    catch (e) { if (trip.id !== FIXTURE_TRIP.id) throw e; console.warn("planDay fallback", e); return FIXTURE_TRIP.blocks.filter((b) => b.dayIndex === dayIndex % 3).map((b) => ({ ...b, dayIndex, id: `${b.id}-${dayIndex}`, start: trip.days[dayIndex].date + b.start.slice(10), end: trip.days[dayIndex].date + b.end.slice(10) })); }
   },
   /** Calls onChunk for each piece of the streamed answer. */
   async ask(trip: Trip, blockId: string, question: string, onChunk: (text: string) => void): Promise<void> {

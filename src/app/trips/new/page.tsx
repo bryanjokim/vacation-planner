@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 import { Header } from "@/components/Header";
 import { storage, newId } from "@/lib/storage";
 import { dayColor } from "@/lib/colors";
-import type { Day, Trip } from "@/lib/types";
+import type { Day, Place, Trip } from "@/lib/types";
+import { APIProvider } from "@vis.gl/react-google-maps";
+import { PlaceInput } from "@/components/PlaceInput";
+
+const MAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? "";
 
 function datesBetween(start: string, end: string): string[] {
   const out: string[] = [];
@@ -41,6 +45,8 @@ export default function NewTrip() {
   const [budget, setBudget] = useState("");
   const [kind, setKind] = useState<"address" | "suggest">("address");
   const [address, setAddress] = useState("");
+  const [cityPlace, setCityPlace] = useState<Place | null>(null);
+  const [hotel, setHotel] = useState<Place | null>(null);
   const [priorities, setPriorities] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -69,7 +75,7 @@ export default function NewTrip() {
       startDate: start,
       endDate: end,
       budget: budgetNum,
-      accommodation: kind === "address" ? { kind, address: address.trim() || undefined } : { kind },
+      accommodation: kind === "address" ? { kind, address: address.trim() || undefined, place: hotel ?? undefined } : { kind },
       priorities: priorities.trim(),
       status: "planning",
       days,
@@ -82,7 +88,7 @@ export default function NewTrip() {
   }
 
   return (
-    <>
+    <APIProvider apiKey={MAPS_KEY}>
       <Header />
       <main className="page page-narrow">
         <ol className="steps">
@@ -108,7 +114,7 @@ export default function NewTrip() {
           )}
           <div className="field">
             <label htmlFor="city">City</label>
-            <input id="city" className="input" type="text" required value={city} onChange={(e) => setCity(e.target.value)} />
+            <PlaceInput id="city" required types={["(cities)"]} value={city} onChange={(t) => { setCity(t); setCityPlace(null); }} onSelect={(p) => { setCity(p.name); setCityPlace(p); }} placeholder="Start typing a city" />
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
             <div className="field" style={{ flex: "1 1 200px" }}>
@@ -140,7 +146,7 @@ export default function NewTrip() {
             {kind === "address" ? (
               <div className="field" style={{ marginTop: 8 }}>
                 <label htmlFor="addr">Address</label>
-                <input id="addr" className="input" type="text" placeholder="Street, number, city" value={address} onChange={(e) => setAddress(e.target.value)} />
+                <PlaceInput id="addr" value={address} near={cityPlace && cityPlace.lat != null && cityPlace.lng != null ? { lat: cityPlace.lat, lng: cityPlace.lng } : undefined} onChange={(t) => { setAddress(t); setHotel(null); }} onSelect={(p) => { setAddress(p.address); setHotel(p); }} placeholder="Hotel name or street address" />
               </div>
             ) : (
               <p className="muted" style={{ margin: "8px 0 0", fontSize: 14 }}>
@@ -160,6 +166,6 @@ export default function NewTrip() {
           </div>
         </form>
       </main>
-    </>
+    </APIProvider>
   );
 }
