@@ -74,25 +74,26 @@ export function BlockPanel({ trip, block, onOptions }: BlockPanelProps) {
   };
 
   const toggle = (active: boolean): CSSProperties => ({
-    flex: 1,
-    background: active ? "#0F1729" : undefined,
-    color: active ? "#fff" : undefined,
+    minHeight: 44, padding: "0 20px", borderRadius: 10, fontSize: 15, fontWeight: 600, cursor: "pointer",
+    border: `1px solid ${active ? "#14181F" : "#B9C0CB"}`,
+    background: active ? "#14181F" : "#FFFFFF",
+    color: active ? "#FFFFFF" : "#14181F",
   });
 
   return (
     <section className="card" style={{ padding: 16, display: "flex", flexDirection: "column", gap: 12 }}>
-      <div>
-        <div className="muted" style={{ fontSize: 13 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <div style={{ fontSize: 13, color: "#556070" }}>
           Day {block.dayIndex + 1} · {hm(block.start)} – {hm(block.end)}
         </div>
-        <h3 style={{ margin: "4px 0" }}>{block.title}</h3>
-        <div className="muted" style={{ fontSize: 13 }}>Estimated ${block.estCost}</div>
+        <h2 style={{ margin: 0, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 24, lineHeight: 1.2 }}>{block.title}</h2>
+        <div style={{ fontSize: 14, color: "#556070" }}>Estimated ${block.estCost}</div>
       </div>
-      <div style={{ display: "flex", gap: 8 }}>
-        <button type="button" className="btn" aria-pressed={mode === "ask"} style={toggle(mode === "ask")} onClick={() => switchTo("ask")}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <button type="button" aria-pressed={mode === "ask"} style={toggle(mode === "ask")} onClick={() => switchTo("ask")}>
           Ask
         </button>
-        <button type="button" className="btn" aria-pressed={mode === "find"} style={toggle(mode === "find")} onClick={() => switchTo("find")}>
+        <button type="button" aria-pressed={mode === "find"} style={toggle(mode === "find")} onClick={() => switchTo("find")}>
           Find options
         </button>
       </div>
@@ -117,9 +118,9 @@ export function BlockPanel({ trip, block, onOptions }: BlockPanelProps) {
             </button>
           </form>
           {asked && (
-            <div aria-live="polite">
-              <div className="muted" style={{ fontSize: 13 }}>You asked: {asked}</div>
-              <p style={{ margin: "6px 0 0", whiteSpace: "pre-wrap", fontSize: 14, lineHeight: 1.5 }}>
+            <div aria-live="polite" style={{ display: "flex", flexDirection: "column", gap: 10, padding: 16, borderRadius: 12, background: "#F5F6F8" }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#556070" }}>You asked: {asked}</div>
+              <p style={{ margin: 0, whiteSpace: "pre-wrap", fontSize: 15, lineHeight: 1.55 }}>
                 {answer || (asking ? "…" : "")}
               </p>
             </div>
@@ -127,7 +128,7 @@ export function BlockPanel({ trip, block, onOptions }: BlockPanelProps) {
         </div>
       )}
       {mode === "find" && (
-        <p aria-live="polite" style={{ margin: 0, fontSize: 14 }}>
+        <p aria-live="polite" style={{ margin: 0, fontSize: 15, lineHeight: 1.5, color: "#556070" }}>
           {finding
             ? "Finding options…"
             : found !== null

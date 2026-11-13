@@ -30,7 +30,7 @@ export function OptionCards({ block, options, onUse }: OptionCardsProps) {
   const at = block.start.slice(11, 16);
   return (
     <section style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <h2 style={{ margin: 0, fontSize: 18 }}>Options for &ldquo;{block.title}&rdquo;</h2>
+      <h2 style={{ margin: 0, fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: 24 }}>Options for &ldquo;{block.title}&rdquo;</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 16 }}>
         {options.map((o) => {
           const delta = o.estCost - block.estCost;
