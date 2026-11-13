@@ -1,0 +1,9 @@
+# planning files (wayfinder map, tickets, research) stay local
+.scratch/
+
+node_modules/
+.next/
+.env
+.env*.local
+.vercel/
+.DS_Store
