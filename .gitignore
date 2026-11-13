@@ -7,3 +7,7 @@ node_modules/
 .env*.local
 .vercel/
 .DS_Store
+.vercel
+.env*
+next-env.d.ts
+*.tsbuildinfo

@@ -1,0 +1,42 @@
+/* SHARED. Tokens from the design "Vacation Planner MVP". */
+:root {
+  --bg: #F5F6F8;
+  --surface: #FFFFFF;
+  --border: #E3E6EB;
+  --input-border: #B9C0CB;
+  --text: #14181F;
+  --muted: #556070;
+  --muted-strong: #3C4552;
+  --primary: #1F4FD8;
+  --primary-soft: #E7EDFC;
+  --primary-ink: #1A3FA8;
+  --ok-soft: #E3F4EC;
+  --ok-ink: #0A5A40;
+  --warn-ink: #8A3B00;
+  --neutral-soft: #EDEFF2;
+  --radius: 16px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-inter), Inter, sans-serif; }
+h1, h2, h3 { font-family: var(--font-grotesk), "Space Grotesk", sans-serif; font-weight: 600; margin: 0; }
+h1 { font-size: 40px; line-height: 1.1; }
+a { color: inherit; }
+button, input, textarea, select { font-family: inherit; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid var(--input-border); background: var(--surface); color: var(--text); }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: #FFFFFF; }
+.btn-dark { background: var(--text); border-color: var(--text); color: #FFFFFF; }
+.btn:disabled { opacity: 0.6; cursor: default; }
+.chip { padding: 4px 10px; border-radius: 999px; font-size: 13px; font-weight: 500; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 14px; font-weight: 600; }
+.input { min-height: 48px; padding: 0 14px; border: 1px solid var(--input-border); border-radius: 10px; font-size: 16px; color: var(--text); background: var(--surface); width: 100%; }
+textarea.input { padding: 12px 14px; line-height: 1.5; min-height: 96px; resize: vertical; }
+.muted { color: var(--muted); }
+.steps { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; color: var(--muted); }
+.steps .current { font-weight: 600; color: var(--text); }
+.page { max-width: 1200px; margin: 0 auto; padding: 40px 40px 64px; display: flex; flex-direction: column; gap: 28px; }
+.page-narrow { max-width: 760px; padding: 40px 24px 64px; }
+@media (max-width: 640px) { .page { padding: 24px 16px 48px; } h1 { font-size: 32px; } }
